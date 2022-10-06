@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 
 public class Elevator {
@@ -25,6 +27,12 @@ public class Elevator {
 	private List<Integer> floorsEntered;
 	
 	
+	/**
+	 * 
+	 */
+	private Hashtable<Integer, Integer> floorList;
+	
+	
 	
 	/**
 	 * 
@@ -33,8 +41,28 @@ public class Elevator {
 	 */
 	public Elevator(int initialFloor, List<Integer> floorsEntered) {
 		this.initialFloor = initialFloor;
+		this.currentFloor = initialFloor;
 		this.floorsEntered = floorsEntered;
+		this.floorList = new Hashtable<Integer, Integer>();
 		this.elevatorDirection = elevatorDirection.IMMOBILE;
+	}
+
+
+
+	/**
+	 * @return the floorList
+	 */
+	public Hashtable<Integer, Integer> getFloorList() {
+		return floorList;
+	}
+
+
+
+	/**
+	 * @param floorList the floorList to set
+	 */
+	public void setFloorList(Hashtable<Integer, Integer> floorList) {
+		this.floorList = floorList;
 	}
 
 
@@ -107,17 +135,38 @@ public class Elevator {
 	 */
 	public void setFloorsEntered(List<Integer> floorsEntered) {
 		this.floorsEntered = floorsEntered;
-		
-		if(initialFloor < floorsEntered.get(0) || currentFloor < floorsEntered.get(0)) {
+		calculateElevatorDirection();
+	}
+	
+	
+	private void calculateElevatorDirection() {
+		if(floorsEntered.get(0) > currentFloor) {
 			setElevatorDirection(elevatorDirection.ASCENDING);
-		}else {
+			Collections.sort(this.floorsEntered);
+			
+		}else if(floorsEntered.get(0) < currentFloor) {
 			setElevatorDirection(elevatorDirection.DESCENDING);
+			Collections.sort(this.floorsEntered, Collections.reverseOrder());
+			
+		}else {
+			setElevatorDirection(elevatorDirection.IMMOBILE);
 		}
 		
 	}
 	
+	public boolean checkArriveToDestination() {
+		boolean isFloorDestination = false;
+		
+		if(currentFloor == floorsEntered.get(0)) {
+			isFloorDestination = true;
+		}
+		
+		return isFloorDestination;
+	}
 	
-	
+	public void changeFloor() {
+		
+	}
 	
 	
 	
