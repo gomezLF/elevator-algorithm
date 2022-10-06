@@ -106,6 +106,13 @@ public class Elevator {
 	 */
 	public void setFloorsEntered(List<Integer> floorsEntered) {
 		this.floorsEntered = floorsEntered;
+		
+		if(initialFloor < floorsEntered.get(0) || currentFloor < floorsEntered.get(0)) {
+			elevatorDirection = elevatorDirection.ASCENDING;
+		}else {
+			elevatorDirection = elevatorDirection.DESCENDING;
+		}
+		
 	}
 	
 	
