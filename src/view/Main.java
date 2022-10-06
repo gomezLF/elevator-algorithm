@@ -22,7 +22,7 @@ public class Main {
 	/**
 	 * 
 	 */
-	private static Elevator first_elevator;
+	private static Elevator elevator;
 	
 	
 	
@@ -31,14 +31,28 @@ public class Main {
 	 */
 	private static void initialSetup() {
 		 sc = new Scanner(System.in);
+		 String values = "";
+		 int initialFloor = 0;
+		 
+		 System.out.println("Digite los valores de los pisos con los cuales quiere comenzar, digite los valores separados por comas");
+		 values = sc.nextLine();
+		 
+		 System.out.println("");
+		 System.out.println("Digite a continuación el valor del piso inicial");
+		 initialFloor = sc.nextInt();
+		 sc.nextLine();
+		 
+		 
+		 
+		//Here the string is converted to a number, to form the initial floor list.
+		 String[] data = values.split(",");
+		 List<Integer> initialFloors = new ArrayList<Integer>();
+		 
+		 for (int i = 0; i < data.length; i++) {
+			initialFloors.add(Integer.parseInt(data[i]));
+		}
 		
-		floorEntered = new ArrayList<Integer>();
-		floorEntered.add(5);
-		floorEntered.add(29);
-		floorEntered.add(13);
-		floorEntered.add(10);
-		
-		first_elevator = new Elevator(1, floorEntered);
+		elevator = new Elevator(initialFloor, initialFloors);
 	}
 	
 	
@@ -49,13 +63,13 @@ public class Main {
 	 * @param elevator
 	 */
 	private static void addFloorToList(int newFloor, int floorToGo, Elevator elevator) {
-		floorEntered.add(newFloor);
-		elevator.setFloorsEntered(floorEntered);
+		elevator.getFloorsEntered().add(newFloor);
+		elevator.calculateElevatorDirection();
 		
 		if(floorToGo > 0) {
 			elevator.getFloorList().put(elevator.getCurrentFloor(), floorToGo);
-			floorEntered.add(floorToGo);
-			elevator.setFloorsEntered(floorEntered);
+			elevator.getFloorsEntered().add(floorToGo);
+			elevator.calculateElevatorDirection();
 		}
 		
 		
@@ -119,7 +133,9 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		initialSetup();
-		iteration(first_elevator);
+		iteration(elevator);
+		
+		System.out.println(elevator.getInitialFloor());
 	}
 
 }
