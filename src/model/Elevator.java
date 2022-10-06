@@ -139,7 +139,7 @@ public class Elevator {
 	}
 	
 	
-	private void calculateElevatorDirection() {
+	public void calculateElevatorDirection() {
 		if(floorsEntered.get(0) > currentFloor) {
 			setElevatorDirection(elevatorDirection.ASCENDING);
 			Collections.sort(this.floorsEntered);
