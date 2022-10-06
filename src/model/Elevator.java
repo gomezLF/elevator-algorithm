@@ -34,6 +34,7 @@ public class Elevator {
 	public Elevator(int initialFloor, List<Integer> floorsEntered) {
 		this.initialFloor = initialFloor;
 		this.floorsEntered = floorsEntered;
+		this.elevatorDirection = elevatorDirection.IMMOBILE;
 	}
 
 
@@ -108,9 +109,9 @@ public class Elevator {
 		this.floorsEntered = floorsEntered;
 		
 		if(initialFloor < floorsEntered.get(0) || currentFloor < floorsEntered.get(0)) {
-			elevatorDirection = elevatorDirection.ASCENDING;
+			setElevatorDirection(elevatorDirection.ASCENDING);
 		}else {
-			elevatorDirection = elevatorDirection.DESCENDING;
+			setElevatorDirection(elevatorDirection.DESCENDING);
 		}
 		
 	}
