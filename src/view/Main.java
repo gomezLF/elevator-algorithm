@@ -17,11 +17,6 @@ public class Main {
 	/**
 	 * 
 	 */
-	private static List<Integer> floorEntered;
-	
-	/**
-	 * 
-	 */
 	private static Elevator elevator;
 	
 	
@@ -59,18 +54,28 @@ public class Main {
 	/**
 	 * 
 	 * @param newFloor
-	 * @param floorToGo
 	 * @param elevator
 	 */
-	private static void addFloorToList(int newFloor, int floorToGo, Elevator elevator) {
+	private static void addFloorToList(int newFloor, Elevator elevator) {
 		elevator.getFloorsEntered().add(newFloor);
-		
-		if(floorToGo > 0) {
-			elevator.getFloorRequest().put(elevator.getCurrentFloor(), floorToGo);
-			elevator.getFloorsEntered().add(floorToGo);
-			
-		}
 		elevator.calculateElevatorDirection();
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private static boolean checkArriveToDestination() {
+		boolean arrived = elevator.checkArriveToDestination();
+		
+		if(arrived) {
+			System.out.println("");
+			System.out.println("Elevador se detiene");
+			System.out.println("Arrivo al destino, piso " + elevator.getCurrentFloor());
+		}
+		
+		return arrived;
 	}
 	
 	
@@ -81,8 +86,6 @@ public class Main {
 	private static void iteration(Elevator elevator) {
 		String request = "";
 		int newFloor = 0;
-		int floorEntered = 0;
-		
 		
 		while(!elevator.getFloorsEntered().isEmpty()) {
 			elevator.calculateElevatorDirection();
@@ -92,25 +95,10 @@ public class Main {
 			System.out.println("Dirección del elevador = " + elevator.getElevatorDirection());
 			System.out.println("Pisos seleccionados = " + elevator.getFloorsEntered());
 			
-			if(elevator.checkArriveToDestination()) {
-				System.out.println("");
-				System.out.println("Elevador se detiene");
-				System.out.println("Arrivo al destino, piso " + elevator.getCurrentFloor());
-				elevator.changeFloor();
-				
-				/*
-				if(elevator.getFloorRequest().containsValue(elevator.getCurrentFloor()) || elevator.getFloorList().isEmpty()) {
-					System.out.println("");
-					System.out.println("Por favor entre el número del piso al cual quiere dirigirse");
-					floorEntered = sc.nextInt();
-					sc.nextLine();
-					
-					addFloorToList(0, floorEntered, elevator);
-				}*/
-				
-			}else {
+			if(!checkArriveToDestination()) {
 				System.out.println("");
 				System.out.println("Elevador " + elevator.getElevatorDirection() + ", al piso " + elevator.getFloorsEntered().get(0));
+				
 			}
 			
 			System.out.println("");
@@ -123,12 +111,14 @@ public class Main {
 				newFloor = sc.nextInt();
 				sc.nextLine();
 				
-				addFloorToList(newFloor, 0, elevator);
+				addFloorToList(newFloor, elevator);
+				checkArriveToDestination();
 				
 			}else {
-				System.out.println("HOla");
 				elevator.calculateElevatorDirection();
 			}
+			
+			elevator.changeFloor();
 		}
 			
 	}
