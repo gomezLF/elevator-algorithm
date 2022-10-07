@@ -11,19 +11,20 @@ public class Main {
 	
 	
 	/**
-	 * 
+	 * Attribute Scanner that allows to read the user's answers by console.
 	 */
 	private static Scanner sc;
 	
 	/**
-	 * 
+	 * Elevator that will be used in the program to simulate.
 	 */
 	private static Elevator elevator;
 	
 	
 	
 	/**
-	 * 
+	 * Method used to read the first initial values with which the elevator 
+	 * is going to start executing. 
 	 */
 	private static void initialSetup() {
 		 sc = new Scanner(System.in);
@@ -57,9 +58,9 @@ public class Main {
 	
 	
 	/**
-	 * 
-	 * @param newFloor
-	 * @param elevator
+	 * Method used to add the new floor to which you want to go.
+	 * @param newFloor - the new floor to which you want to go
+	 * @param elevator - elevator to be used to reach the floor.
 	 */
 	private static void addFloorToList(int newFloor, Elevator elevator) {
 		elevator.getFloorRequest().put(elevator.getCurrentFloor(), newFloor);
@@ -69,10 +70,10 @@ public class Main {
 	
 	
 	/**
-	 * 
-	 * @return
+	 * Method that verifies if the user has arrived at a destination floor, 
+	 * in order to display all relevant information.
 	 */
-	private static boolean checkArriveToDestination() {
+	private static void checkArriveToDestination() {
 		boolean arrived = elevator.checkArriveToDestination();
 		
 		if(arrived) {
@@ -83,14 +84,14 @@ public class Main {
 			System.out.println("");
 			System.out.println("Elevador " + elevator.getElevatorDirection() + ", al piso " + elevator.getFloorsEntered().get(0));
 		}
-		
-		return arrived;
 	}
 	
 	
 	/***
+	 * Method used to iterate the entire elevator simulation process until 
+	 * there are no more requests for floors to go to.
 	 * 
-	 * @param elevator
+	 * @param elevator - elevator to start the process 
 	 */
 	private static void iteration(Elevator elevator) {
 		String request = "";
@@ -126,10 +127,7 @@ public class Main {
 	}
 	
 	
-	/**
-	 * 
-	 * @param args
-	 */
+	
 	public static void main(String[] args) {
 		initialSetup();
 		iteration(elevator);
