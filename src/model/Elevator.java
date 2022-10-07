@@ -1,15 +1,10 @@
 package model;
 
-import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 public class Elevator {
-	
-	/**
-	 * 
-	 */
-	private int initialFloor;
 	
 	/**
 	 * 
@@ -40,11 +35,11 @@ public class Elevator {
 	 * @param floorsEntered
 	 */
 	public Elevator(int initialFloor, List<Integer> floorsEntered) {
-		this.initialFloor = initialFloor;
 		this.currentFloor = initialFloor;
 		this.floorsEntered = floorsEntered;
 		this.floorRequest = new Hashtable<Integer, Integer>();
-		this.elevatorDirection = elevatorDirection.IMMOBILE;
+		
+		calculateElevatorDirection();
 	}
 
 
@@ -63,24 +58,6 @@ public class Elevator {
 	 */
 	public void setFloorRequest(Hashtable<Integer, Integer> floorList) {
 		this.floorRequest = floorList;
-	}
-
-
-
-	/**
-	 * @return the initialFloor
-	 */
-	public int getInitialFloor() {
-		return initialFloor;
-	}
-
-
-
-	/**
-	 * @param initialFloor the initialFloor to set
-	 */
-	public void setInitialFloor(int initialFloor) {
-		this.initialFloor = initialFloor;
 	}
 
 
@@ -138,14 +115,16 @@ public class Elevator {
 	}
 	
 	
+	
+	/**
+	 * 
+	 */
 	public void calculateElevatorDirection() {
 		if(floorsEntered.get(0) > currentFloor) {
 			setElevatorDirection(elevatorDirection.ASCENDING);
-			Collections.sort(this.floorsEntered);
 			
 		}else if(floorsEntered.get(0) < currentFloor) {
 			setElevatorDirection(elevatorDirection.DESCENDING);
-			Collections.sort(this.floorsEntered, Collections.reverseOrder());
 			
 		}else {
 			setElevatorDirection(elevatorDirection.IMMOBILE);
@@ -153,19 +132,39 @@ public class Elevator {
 		
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean checkArriveToDestination() {
 		boolean isFloorDestination = false;
 		
-		if(currentFloor == floorsEntered.get(0)) {
-			floorsEntered.remove(0);
+		if(floorRequest.contains(currentFloor)) {
+			deleteRegisteredFloor();
 			isFloorDestination = true;
 		}
 		
 		return isFloorDestination;
 	}
 	
+	
+	
+	private void deleteRegisteredFloor() {
+		for (int i = 0; i < floorsEntered.size(); i++) {
+			if(currentFloor == floorsEntered.get(i)) {
+				floorsEntered.remove(i);
+			}
+		}
+	}
+	
+	
+	
+	/**
+	 * 
+	 */
 	public void changeFloor() {
-		
 		calculateElevatorDirection();
 		
 		if(elevatorDirection == elevatorDirection.ASCENDING) {
