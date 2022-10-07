@@ -7,32 +7,36 @@ import java.util.Map.Entry;
 public class Elevator {
 	
 	/**
-	 * 
+	 * Parameter to indicate the direction in which the elevator moves.
 	 */
 	private ElevatorDirection elevatorDirection;
 	
 	/**
-	 * 
+	 * Parameter indicating the current floor on which the elevator is located.
 	 */
 	private int currentFloor;
 	
 	/**
-	 * 
+	 * List of floors to which the elevator has to reach, 
+	 * according to the direction in which it moves.
 	 */
 	private List<Integer> floorsEntered;
 	
 	
 	/**
-	 * 
+	 * List of floor requests, with their requested floors, 
+	 * which the elevator has to reach.
 	 */
 	private Hashtable<Integer, Integer> floorRequest;
 	
 	
 	
 	/**
+	 * Constructor of the Elevator class, in which its corresponding parameters are 
+	 * initialized.
 	 * 
-	 * @param initialFloor
-	 * @param floorsEntered
+	 * @param initialFloor - The initial floor from which the elevator is to start operating on the first run.
+	 * @param floorsEntered - List of floors to which the elevator has to reach, according to the direction in which it moves.
 	 */
 	public Elevator(int initialFloor, List<Integer> floorsEntered) {
 		this.currentFloor = initialFloor;
@@ -117,7 +121,8 @@ public class Elevator {
 	
 	
 	/**
-	 * 
+	 * Method that calculates the direction of the elevator, according to the oldest 
+	 * order, i.e. the first or closest to be executed.
 	 */
 	public void calculateElevatorDirection() {
 		if(floorsEntered.get(0) > currentFloor) {
@@ -135,8 +140,11 @@ public class Elevator {
 	
 	
 	/**
+	 * Method that identifies whether the current floor on which the elevator is 
+	 * located is a previously named floor. If so, it removes the floor from both the 
+	 * requests and the floor list.
 	 * 
-	 * @return
+	 * @return true if the current floor was previously called, false otherwise.
 	 */
 	public boolean checkArriveToDestination() {
 		boolean isFloorDestination = false;
@@ -153,7 +161,8 @@ public class Elevator {
 	
 	
 	/**
-	 * 
+	 * Method that removes the current floor on which the elevator is located from 
+	 * the list of requested floors.
 	 */
 	private void deleteRequestFloor() {
 		for (Entry<Integer, Integer> value : floorRequest.entrySet()) {
@@ -168,7 +177,8 @@ public class Elevator {
 	
 	
 	/**
-	 * 
+	 * Method that removes the current floor on which the elevator is located from 
+	 * the list of floors to which it has to move.
 	 */
 	private void deleteRegisteredFloor() {
 		for (int i = 0; i < floorsEntered.size(); i++) {
@@ -181,7 +191,8 @@ public class Elevator {
 	
 	
 	/**
-	 * 
+	 * Method that allows changing floors, depending on the direction in 
+	 * which the elevator moves.
 	 */
 	public void changeFloor() {
 		if(!floorsEntered.isEmpty()) {
