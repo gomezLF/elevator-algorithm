@@ -30,7 +30,7 @@ public class Elevator {
 	/**
 	 * 
 	 */
-	private Hashtable<Integer, Integer> floorList;
+	private Hashtable<Integer, Integer> floorRequest;
 	
 	
 	
@@ -43,7 +43,7 @@ public class Elevator {
 		this.initialFloor = initialFloor;
 		this.currentFloor = initialFloor;
 		this.floorsEntered = floorsEntered;
-		this.floorList = new Hashtable<Integer, Integer>();
+		this.floorRequest = new Hashtable<Integer, Integer>();
 		this.elevatorDirection = elevatorDirection.IMMOBILE;
 	}
 
@@ -52,8 +52,8 @@ public class Elevator {
 	/**
 	 * @return the floorList
 	 */
-	public Hashtable<Integer, Integer> getFloorList() {
-		return floorList;
+	public Hashtable<Integer, Integer> getFloorRequest() {
+		return floorRequest;
 	}
 
 
@@ -61,8 +61,8 @@ public class Elevator {
 	/**
 	 * @param floorList the floorList to set
 	 */
-	public void setFloorList(Hashtable<Integer, Integer> floorList) {
-		this.floorList = floorList;
+	public void setFloorRequest(Hashtable<Integer, Integer> floorList) {
+		this.floorRequest = floorList;
 	}
 
 
@@ -135,7 +135,6 @@ public class Elevator {
 	 */
 	public void setFloorsEntered(List<Integer> floorsEntered) {
 		this.floorsEntered = floorsEntered;
-		calculateElevatorDirection();
 	}
 	
 	
@@ -166,6 +165,15 @@ public class Elevator {
 	
 	public void changeFloor() {
 		
+		floorsEntered.remove(0);
+		calculateElevatorDirection();
+		
+		if(elevatorDirection == elevatorDirection.ASCENDING) {
+			currentFloor =+ 1;
+			
+		}else if(elevatorDirection == elevatorDirection.DESCENDING){
+			currentFloor =- 1;
+		}
 	}
 	
 	
