@@ -1,8 +1,8 @@
 package model;
 
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class Elevator {
 	
@@ -121,13 +121,13 @@ public class Elevator {
 	 */
 	public void calculateElevatorDirection() {
 		if(floorsEntered.get(0) > currentFloor) {
-			setElevatorDirection(elevatorDirection.ASCENDING);
+			setElevatorDirection(ElevatorDirection.ASCENDING);
 			
 		}else if(floorsEntered.get(0) < currentFloor) {
-			setElevatorDirection(elevatorDirection.DESCENDING);
+			setElevatorDirection(ElevatorDirection.DESCENDING);
 			
 		}else {
-			setElevatorDirection(elevatorDirection.IMMOBILE);
+			setElevatorDirection(ElevatorDirection.IMMOBILE);
 		}
 		
 	}
@@ -142,6 +142,7 @@ public class Elevator {
 		boolean isFloorDestination = false;
 		
 		if(floorRequest.contains(currentFloor)) {
+			deleteRequestFloor();
 			deleteRegisteredFloor();
 			isFloorDestination = true;
 		}
@@ -151,6 +152,24 @@ public class Elevator {
 	
 	
 	
+	/**
+	 * 
+	 */
+	private void deleteRequestFloor() {
+		for (Entry<Integer, Integer> value : floorRequest.entrySet()) {
+			if(currentFloor == value.getValue()) {
+				floorRequest.remove(value.getKey());
+				break;
+			}
+			
+		}
+	}
+	
+	
+	
+	/**
+	 * 
+	 */
 	private void deleteRegisteredFloor() {
 		for (int i = 0; i < floorsEntered.size(); i++) {
 			if(currentFloor == floorsEntered.get(i)) {
@@ -167,10 +186,10 @@ public class Elevator {
 	public void changeFloor() {
 		calculateElevatorDirection();
 		
-		if(elevatorDirection == elevatorDirection.ASCENDING) {
+		if(elevatorDirection == ElevatorDirection.ASCENDING) {
 			currentFloor++;
 			
-		}else if(elevatorDirection == elevatorDirection.DESCENDING){
+		}else if(elevatorDirection == ElevatorDirection.DESCENDING){
 			currentFloor--;
 		}
 	}
