@@ -47,7 +47,7 @@ public class Main {
 		 
 		 for (int i = 0; i < data.length; i++) {
 			initialFloors.add(Integer.parseInt(data[i]));
-			floorRequest.put(initialFloor, Integer.parseInt(data[i]));
+			floorRequest.put(Integer.parseInt(data[i]), Integer.parseInt(data[i]));
 		}
 		
 		elevator = new Elevator(initialFloor, initialFloors);
