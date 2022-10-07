@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,15 +40,19 @@ public class Main {
 		 
 		 
 		 
-		//Here the string is converted to a number, to form the initial floor list.
+		//Here the string is converted to a number, to form the initial floor list and initial floors request.
 		 String[] data = values.split(",");
 		 List<Integer> initialFloors = new ArrayList<Integer>();
+		 Hashtable<Integer, Integer> floorRequest = new Hashtable<>();
 		 
 		 for (int i = 0; i < data.length; i++) {
 			initialFloors.add(Integer.parseInt(data[i]));
+			floorRequest.put(initialFloor, Integer.parseInt(data[i]));
 		}
 		
 		elevator = new Elevator(initialFloor, initialFloors);
+		elevator.setFloorRequest(floorRequest);
+		
 	}
 	
 	
@@ -57,6 +62,7 @@ public class Main {
 	 * @param elevator
 	 */
 	private static void addFloorToList(int newFloor, Elevator elevator) {
+		elevator.getFloorRequest().put(elevator.getCurrentFloor(), newFloor);
 		elevator.getFloorsEntered().add(newFloor);
 		elevator.calculateElevatorDirection();
 	}
@@ -73,6 +79,9 @@ public class Main {
 			System.out.println("");
 			System.out.println("Elevador se detiene");
 			System.out.println("Arrivo al destino, piso " + elevator.getCurrentFloor());
+		}else {
+			System.out.println("");
+			System.out.println("Elevador " + elevator.getElevatorDirection() + ", al piso " + elevator.getFloorsEntered().get(0));
 		}
 		
 		return arrived;
@@ -88,18 +97,14 @@ public class Main {
 		int newFloor = 0;
 		
 		while(!elevator.getFloorsEntered().isEmpty()) {
-			elevator.calculateElevatorDirection();
+			//elevator.calculateElevatorDirection();
 			
 			System.out.println("====================");
 			System.out.println("Piso actual = " + elevator.getCurrentFloor());
 			System.out.println("Dirección del elevador = " + elevator.getElevatorDirection());
 			System.out.println("Pisos seleccionados = " + elevator.getFloorsEntered());
 			
-			if(!checkArriveToDestination()) {
-				System.out.println("");
-				System.out.println("Elevador " + elevator.getElevatorDirection() + ", al piso " + elevator.getFloorsEntered().get(0));
-				
-			}
+			checkArriveToDestination();
 			
 			System.out.println("");
 			System.out.println("¿Quiere pedir el elevador? Si es así, escriba el caracter 'y', de lo contrario escriba 'n'");
@@ -107,15 +112,12 @@ public class Main {
 			
 			if(request.compareToIgnoreCase("y") == 0) {
 				System.out.println("");
-				System.out.println("Por favor digite el número del piso en el que se encuentra");
+				System.out.println("Por favor digite el número del piso al cual quiere llegar");
 				newFloor = sc.nextInt();
 				sc.nextLine();
 				
 				addFloorToList(newFloor, elevator);
-				checkArriveToDestination();
-				
-			}else {
-				elevator.calculateElevatorDirection();
+				checkArriveToDestination();	
 			}
 			
 			elevator.changeFloor();
