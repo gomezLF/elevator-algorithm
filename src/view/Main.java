@@ -85,6 +85,8 @@ public class Main {
 		
 		
 		while(!elevator.getFloorsEntered().isEmpty()) {
+			elevator.calculateElevatorDirection();
+			
 			System.out.println("====================");
 			System.out.println("Piso actual = " + elevator.getCurrentFloor());
 			System.out.println("Dirección del elevador = " + elevator.getElevatorDirection());
@@ -108,7 +110,7 @@ public class Main {
 				
 			}else {
 				System.out.println("");
-				System.out.println("Elevador " + elevator.getElevatorDirection() + ", del piso " + elevator.getCurrentFloor() + "al " + elevator.getFloorsEntered().get(0));
+				System.out.println("Elevador " + elevator.getElevatorDirection() + ", al piso " + elevator.getFloorsEntered().get(0));
 			}
 			
 			System.out.println("");
@@ -124,6 +126,7 @@ public class Main {
 				addFloorToList(newFloor, 0, elevator);
 				
 			}else {
+				System.out.println("HOla");
 				elevator.calculateElevatorDirection();
 			}
 		}

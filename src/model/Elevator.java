@@ -169,10 +169,10 @@ public class Elevator {
 		calculateElevatorDirection();
 		
 		if(elevatorDirection == elevatorDirection.ASCENDING) {
-			currentFloor =+ 1;
+			currentFloor++;
 			
 		}else if(elevatorDirection == elevatorDirection.DESCENDING){
-			currentFloor =- 1;
+			currentFloor--;
 		}
 	}
 	
