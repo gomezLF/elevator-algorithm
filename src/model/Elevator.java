@@ -157,6 +157,7 @@ public class Elevator {
 		boolean isFloorDestination = false;
 		
 		if(currentFloor == floorsEntered.get(0)) {
+			floorsEntered.remove(0);
 			isFloorDestination = true;
 		}
 		
@@ -165,7 +166,6 @@ public class Elevator {
 	
 	public void changeFloor() {
 		
-		floorsEntered.remove(0);
 		calculateElevatorDirection();
 		
 		if(elevatorDirection == elevatorDirection.ASCENDING) {
