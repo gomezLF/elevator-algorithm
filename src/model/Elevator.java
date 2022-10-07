@@ -184,13 +184,15 @@ public class Elevator {
 	 * 
 	 */
 	public void changeFloor() {
-		calculateElevatorDirection();
-		
-		if(elevatorDirection == ElevatorDirection.ASCENDING) {
-			currentFloor++;
+		if(!floorsEntered.isEmpty()) {
+			calculateElevatorDirection();
 			
-		}else if(elevatorDirection == ElevatorDirection.DESCENDING){
-			currentFloor--;
+			if(elevatorDirection == ElevatorDirection.ASCENDING) {
+				currentFloor++;
+				
+			}else if(elevatorDirection == ElevatorDirection.DESCENDING){
+				currentFloor--;
+			}
 		}
 	}
 	
